@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+   <title>PREMKUMAR</title>
+   <link rel="icon"href="Ironman1.png">
+   <head>
+      <link rel="stylesheet" href="RegisterForm.css">
+   </head>
+   <body>
+      <h2 style="text-shadow: 1px 2px 2px #ffff;" align="center"><u>StudentRegister Form</u> </h2>
+      
+      <div class="center">
+   
+      
+         <div class="s3">
+            <label form="fname"><b>First name:</b></label>
+         </div>
+         <div class="s4">
+            <input type="text" placeholder="Enter Firstname" id="first_name" autocomplete="off" >
+        
+            <span id="fnameerror" style="color:red"></span>
+         </div>
+     
+         <div class="s3">
+            <label form="lname"><b>Last name:</b></label>
+         </div>
+         <div class="s4">
+            <input type="text" placeholder="Enter Lastname" id="last_name" autocomplete="off" >
+            <span id="lnameerror" style="color:red"></span>
+         </div>
+         <div class="s3">
+            <label form="dob"><b>Date Of Birth:</b></label>
+         </div>
+         <div class="s4">
+            <input type="date" id="dob" name="dob">
+            <span id="doberror" style="color:red"></span>
+         </div>
+         <div class="s3">
+            <label form="phone"><b>Phone Number:</b></label>
+         </div>
+         <div class="s4">
+            <input type="text"  maxlength=10 placeholder="Enter Phonenumber"  id="mobileno" onkeypress="return keyallynumberonly(event)"autocomplete="off" >
+            <span id="phonenumeerror" style="color:red"></span>
+         </div>
+         <div class="s3">
+            <label form="email"><b>Email:</b></label>
+         </div>
+         <div class="s4">
+            <input type="text" placeholder="Enter Email" id="emailid" autocomplete="off" >
+            <span id="emailerror" style="color:red"></span>
+         
+         </div>
+         <div class="s3">
+            <label form="Country"><b>City:</b></label>
+         </div>
+         <div class="s4">
+            <select  name="City" id="city">
+               <option  value="">Select</option>
+               <option  value="Chennai">Chennai</option>
+               <option  value="Kanchipurm">Kanchipurm</option>
+               <option  value="Thiruvallur">Thiruvallur</option>
+               <option  value="Coimbatore">Coimbatore</option>
+               <option  value="Bangalore">Bangalore</option>
+               <option  value="Trichy">Trichy</option>
+               <option  value="Pudhucherry">Pudhucherry</option>
+            </select>
+             <span id="cityerror" style="color:red"></span>
+         </div>
+          <div class="s3">
+            <label form=><b>Area Of Intrest:</b></label>
+          </div>
+          <div class="s4" id="aoi" >
+          </div>
+         <div class="s3">
+            <label form="gender"><b>Gender:</b></label>
+         </div>
+         <div class="s4"  style="background-color:#ffffff; padding:15px">
+            <input type="radio"  name="gender" id="Gender1"> <label for = "Gender1"> Male</label>
+            <input type="radio"  name="gender" id="Gender2"> <label for = "Gender2"> Female</label>
+             <input type="radio"  name="gender" id="Gender3"> <label for = "Gender3"> Other</label>
+            <span id="gendererror" style="color:red"></span>
+         </div>
+         <div class="s4" style="height:120px;">
+         <p><b> Address: </b><p>
+     <textarea id="address"  maxlength=500 name="address" rows="5" cols="50"> </textarea>
+     
+     <span id="addresserror" style="color:red"></span>
+         </div>
+         
+         <div class="s3">
+            <label form="uname"><b>User name:</b></label>
+         </div>
+         <div class="s4">
+            <input type="text" placeholder="Enter username"id="username" onkeypress="return keySmallcase(event)">
+            <span id="usererror" style="color:red"></span>
+         </div>
+         <div class="s3">
+            <label for="psw"><b>Password:</b></label>
+         </div>
+         <div class="s4">
+            <input type="password" placeholder="Enter Password"  name="pass" id="password">
+            <span id="passerr"  style="color:red">  </span>             
+         </div> 
+	<div class="s3">
+            <label form="file"><b>Upload Profile:</b></label>
+         </div>
+         <div class="s4">
+            <input type="file" id="profile_photo" onChange="profileChange(event)">
+        
+            <span id="fileerr" style="color:red"></span>
+         </div>
+            <p>creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+          <div class="text-center">  
+            <button type="button" class="registerbtn" onclick="login()">Register</button>
+          </div> 
+            
+         
+          
+         </div>
+      
+   </body>
+</html>
+<script> 
+let selectedfile;
+   let aoiId=[];
+   
+function login(){
+	let status=true;
+        let first_name=document.getElementById("first_name").value;
+        let last_name=document.getElementById("last_name").value;
+        let dob=document.getElementById("dob").value;
+	let mobileno=document.getElementById("mobileno").value;
+	let emailid=document.getElementById('emailid').value;
+	let city = document.getElementById("city").value;
+        let address = document.getElementById("address").value;
+	let Gender1 = document.getElementById("Gender1").checked;
+        let Gender2 = document.getElementById("Gender2").checked;
+        let Gender3 = document.getElementById("Gender3").checked;
+        let username=document.getElementById("username").value;
+	let password=document.getElementById("password").value;
+	let profile_photo=document.getElementById("profile_photo").value;
+	let isValidEmail=emailvalidate(emailid);
+	let isValidPassword=passvalidate(password);
+
+    	let gender = '';
+        if (Gender1 == true) {
+        gender = "M";
+        } else if (Gender2 == true) {
+        gender = "F";
+        } else if (Gender3 == true) {
+        gender = "O";
+       }
+       
+    if(first_name=='' || first_name==null || first_name.toString().trim().length==0){
+     document.getElementById("fnameerror").innerHTML='Please enter firstname';
+      status=false
+    }else{
+     document.getElementById("fnameerror").innerHTML=''; 
+    }
+    
+    if(last_name=='' || last_name==null || last_name.toString().trim().length==0){
+     document.getElementById("lnameerror").innerHTML='Please enter lastname';
+      status=false
+    }else{
+     document.getElementById("lnameerror").innerHTML=''; 
+    }
+    if (dob == '' || dob == null || dob.toString().trim().length == 0) {
+      document.getElementById("doberror").innerHTML = 'Please enter dob';
+      status = false
+   } else {
+      document.getElementById("doberror").innerHTML = '';
+   }
+     if(mobileno=='' || mobileno==null || mobileno.toString().trim().length==0){
+     document.getElementById("phonenumeerror").innerHTML='Please enter phonenumber';
+      status=false
+    }else{
+     document.getElementById("phonenumeerror").innerHTML=''; 
+    }
+    if(emailid=='' || emailid==null || emailid.toString().trim().length==0){
+     document.getElementById("emailerror").innerHTML='Please enter Email';
+      status=false
+    }else  if(emailid!=null && emailid!='' && isValidEmail==false){
+    document.getElementById("emailerror").innerHTML='Please enter valid Email';
+      status=false
+    }
+    else{
+     document.getElementById("emailerror").innerHTML=''; 
+    }
+    
+    if (gender == false && gender == false && gender == false) {
+      document.getElementById("gendererror").innerHTML = 'Please select gender';
+      status = false
+   } else {
+      document.getElementById("gendererror").innerHTML = '';
+   } 
+    if (address == '' || address == null) {
+      document.getElementById("addresserror").innerHTML = 'Please enter your address';
+   } else {
+      document.getElementById("addresserror").innerHTML = '';
+   }
+   if (city == '' || city == null) {
+      document.getElementById("cityerror").innerHTML = 'Please Select your city';
+      status = false
+   } else {
+      document.getElementById("cityerror").innerHTML = '';
+   }
+   if (profile_photo == '' || profile_photo == null || profile_photo.toString().trim().length == 0) {
+      document.getElementById("fileerr").innerHTML = 'Please select a file';
+      status = false
+   } else {
+      document.getElementById("fileerr").innerHTML = '';
+   }
+     
+     if(username=='' || username==null || username.toString().trim().length==0){
+     document.getElementById("usererror").innerHTML='Please enter username';
+      status=false
+    }else{
+     document.getElementById("usererror").innerHTML=''; 
+    }
+     if(password=='' || password==null || password.toString().trim().length==0){
+     document.getElementById("passerr").innerHTML='Please enter password';
+      status=false
+    }else  if(password!=null && password!='' && isValidPassword==false){
+    document.getElementById("passerr").innerHTML='Please enter valid Password';
+      status=false
+    }
+    else{
+     document.getElementById("passerr").innerHTML=''; 
+    }
+     if(status==true){
+       let form = new FormData();
+      form.append('first_name', first_name);
+      form.append('last_name', last_name);
+      form.append('dob', dob);
+      form.append('mobileno', mobileno);
+      form.append('emailid', emailid);
+      form.append('city', city);
+      form.append('area_of_interest', area_of_interest);
+      form.append('gender', gender);
+      form.append('address', address);
+      form.append('username', username);
+      form.append('password', password);
+      form.append('profile_photo', selectedfile);
+      const request = new XMLHttpRequest();
+      request.open("POST", "http://10.10.14.14/Paul/training/register.php");
+      request.send(form);
+      request.onload = function () {
+         console.log(request, "request");
+         var jsonResponse = JSON.parse(request.responseText);
+         console.log(jsonResponse, "jsonResponse");
+         if(jsonResponse.status==true){
+            window.location.href="home.html";
+            }else{
+            document.getElementById('loginerror').innerHTML=jsonResponse.message;
+            }
+      }
+   }
+       
+    }
+    function keyallynumberonly(e){
+      console.log(e, "e")
+   let mobileno = (e.which) ? e.which : e.keyCode;
+   if (mobileno >= 48 && mobileno <= 57) {
+      return true;
+   } else {
+      return false;
+   }
+}
+  function keySmallcase(e){
+  
+  let username = (e.which) ? e.which : e.keyCode;
+  if (username >= 97 && username <= 122) {
+      return true;
+   } else {
+      return false;
+   }
+  
+  }
+
+
+function profileChange(e) {
+   console.log(event, "event file");
+   selectedfile = e.target.files[0];
+   console.log(selectedfile, "selectedfile")
+   let filename = selectedfile.name;
+   let filesize = selectedfile.size;
+   console.log(filename, "filename")
+   console.log(filesize, "filesize")
+   let lastindexFile = filename.lastIndexOf('.')
+   console.log(lastindexFile, "lastindexFile");
+   let subscringValue = filename.substring(lastindexFile + 1);
+   console.log(subscringValue, "subscringValue");
+   let allowedExtetion = ['jpg', 'jpeg', 'png'];
+   let isValid = allowedExtetion.includes(subscringValue);
+   console.log(isValid, "isValid")
+   if (isValid == true) {
+      document.getElementById('fileerr').innerHTML = " ";
+      return true;
+   } else {
+      document.getElementById('fileerr').innerHTML = "Invalid file type. allowed file type is " + allowedExtetion.toString();
+      selectedfile = '';
+      return false;
+   }
+}
+
+    let area_of_interest = [];
+    let aoi = [{
+   id: 1,
+   name: "FrontEnd Developer"
+}, {
+   id: 2,
+   name: "BackEnd Developer"
+}, {
+   id: 3,
+   name: "UI Developer"
+}];
+let aoidesign = '';
+for (let i = 0; i < aoi.length; i++) {
+   aoidesign += '<input type="checkbox" value="' + aoi[i].id + '" onChange="checkboxChange(event)">' + aoi[i].name;
+}
+document.getElementById('aoi').innerHTML = aoidesign;
+
+function checkboxChange(e) {
+   console.log(e, "e");
+   console.log(e.target.checked, "checked");
+   console.log(e.srcElement.value, "checked");
+   if (e.target.checked == true) {
+      area_of_interest.push(e.srcElement.value);
+   } else {
+      let index = area_of_interest.indexOf(e.srcElement.value);
+      console.log(index, "index");
+      if (index != -1) {
+         area_of_interest.splice(index, 1);
+      }
+   }
+
+console.log(area_of_interest,"area_of_interest");
+console.log(area_of_interest.toString(),"array to string");
+}
+
+  years = 18;
+let currentDate = new Date();
+let minusYear=currentDate.getFullYear() - years;
+let newYearDate=currentDate.setFullYear(minusYear)
+var newConvertDate=new Date(newYearDate);
+console.log(newConvertDate,"newDate");
+let newYear=newConvertDate.getFullYear();
+let newMonth=(newConvertDate.getMonth()>=10)?(newConvertDate.getMonth()+1):'0'+(newConvertDate.getMonth()+1);
+let newDate=newConvertDate.getDate();
+let maxyearDate=newYear+'-'+newMonth+'-'+newDate;
+console.log(maxyearDate,"maxyearDate");
+document.getElementById('dob').max=maxyearDate.toString();
+
+
+function emailvalidate(emailid) {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (re.test(emailid)) {
+          return true;
+        } else {
+          return false;
+        }
+        
+}
+function passvalidate(password){
+	
+     const paswd= /^(?=.*[0-9])(?=.*[!@#$%^&])[a-zA-Z0-9!@#$%^&]{7,15}$/;
+	if(paswd.test(password)){
+	return true;
+     }else{
+      return false;
+  }
+}
+      
+
+               
+     
+</script>
+
